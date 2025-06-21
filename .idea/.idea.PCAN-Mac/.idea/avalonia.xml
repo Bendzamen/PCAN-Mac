@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="PCAN-Mac/App.axaml" value="PCAN-Mac/PCAN-Mac.csproj" />
         <entry key="PCAN-Mac/Views/MainWindow.axaml" value="PCAN-Mac/PCAN-Mac.csproj" />
       </map>
     </option>
