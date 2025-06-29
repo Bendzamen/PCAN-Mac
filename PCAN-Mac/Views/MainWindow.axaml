@@ -14,7 +14,8 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    <StackPanel Margin="10" Spacing="5">
+        <Button Name="StartButton" Content="Start CAN Read" Click="OnStartClick"/>
+        <Button Name="StopButton" Content="Stop CAN Read" Click="OnStopClick" IsEnabled="False"/>
+    </StackPanel>
 </Window>
