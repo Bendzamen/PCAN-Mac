@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCAN-Mac", "PCAN-Mac\PCAN-Mac.csproj", "{61AA92A4-2257-49C2-B5FA-CF49800373EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCAN_Mac", "PCAN_Mac\PCAN_Mac.csproj", "{61AA92A4-2257-49C2-B5FA-CF49800373EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

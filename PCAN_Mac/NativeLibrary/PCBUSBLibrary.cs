@@ -129,7 +129,7 @@ internal static class PCBUSBLibrary
     public static extern TPCANStatus LCAN_GetErrorText(
         TPCANStatus Error,
         uint Language,
-        [Out, MarshalAs(UnmanagedType.LPStr)] string buffer);
+        [MarshalAs(UnmanagedType.LPStr)] out string buffer);
     
     /** @brief       Finds a PCAN-Basic channel that matches with the given parameters
      *  @param[in]   Parameters    A comma separated string contained pairs of parameter-name/value
@@ -139,6 +139,6 @@ internal static class PCBUSBLibrary
      */
     [DllImport("/usr/local/lib/libPCBUSB.dylib", EntryPoint = "CAN_LookUpChannel", CallingConvention = CallingConvention.Cdecl)]
     public static extern TPCANStatus LCAN_LookUpChannel(
-        [Out, MarshalAs(UnmanagedType.LPStr)] string Parameters,
+        [MarshalAs(UnmanagedType.LPStr)] out string Parameters,
         out TPCANHandle FoundChannel);
 }

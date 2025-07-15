@@ -5,6 +5,9 @@
       <map>
         <entry key="PCAN-Mac/App.axaml" value="PCAN-Mac/PCAN-Mac.csproj" />
         <entry key="PCAN-Mac/Views/MainWindow.axaml" value="PCAN-Mac/PCAN-Mac.csproj" />
+        <entry key="PCAN-Mac/Views/test.axaml" value="PCAN-Mac/PCAN-Mac.csproj" />
+        <entry key="PCAN_Mac/App.axaml" value="PCAN_Mac/PCAN_Mac.csproj" />
+        <entry key="PCAN_Mac/Views/MainWindow.axaml" value="PCAN_Mac/PCAN_Mac.csproj" />
       </map>
     </option>
   </component>

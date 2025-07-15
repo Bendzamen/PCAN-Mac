@@ -3,3 +3,10 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+.vs
+.vscode
+[Bb]in/
+[Oo]bj/
+*.nupkg
+*.DS_store
+.idea
