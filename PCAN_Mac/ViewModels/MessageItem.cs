@@ -7,6 +7,7 @@ namespace PCAN_Mac.ViewModels
     {
         public uint RawID { get; }
         public string ID => $"0x{RawID:X3}";
+        public int DataLen { get; }
         private string _timestamp = "";
         public string Timestamp
         {
@@ -21,10 +22,11 @@ namespace PCAN_Mac.ViewModels
             set { _dataHex = value; OnPropertyChanged(); }
         }
 
-        public MessageItem(uint id, string ts, string data)
+        public MessageItem(uint id, string ts, int len, string data)
         {
             RawID = id;
             Timestamp = ts;
+            DataLen = len;
             DataHex = data;
         }
 

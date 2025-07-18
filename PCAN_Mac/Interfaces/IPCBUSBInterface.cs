@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using PCAN_Mac.Enums;
 using PCAN_Mac.Structs;
 

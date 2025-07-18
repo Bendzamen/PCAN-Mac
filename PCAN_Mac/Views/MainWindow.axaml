@@ -29,10 +29,11 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="#CCC" BorderThickness="0,0,0,0" Padding="0 ">
-                        <Grid ColumnDefinitions="80,120,*">
+                        <Grid ColumnDefinitions="80,40,180,*">
                             <TextBlock Grid.Column="0" Text="{Binding ID}" FontSize="12"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Timestamp}" FontSize="12"/>
+                            <TextBlock Grid.Column="1" Text="{Binding DataLen}" FontSize="12"/>
                             <TextBlock Grid.Column="2" Text="{Binding DataHex}" FontSize="12"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Timestamp}" FontSize="12"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

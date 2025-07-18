@@ -7,10 +7,11 @@ using PCAN_Mac.Structs;
 
 namespace PCAN_Mac.Models;
 
-public class CanMessageEventArgs(uint id, string timestamp, byte[] data) : EventArgs
+public class CanMessageEventArgs(uint id, string timestamp, int len, byte[] data) : EventArgs
 {
     public uint Id { get; } = id;
     public string Timestamp { get; } = timestamp;
+    public int Len { get; } = len;
     public byte[] Data { get; } = data;
 }
 
@@ -58,15 +59,18 @@ public class CanReader
 
             if (ret == TPCANStatus.PCAN_ERROR_OK)
             {
-                int len = Math.Clamp(msg.LEN, 0, msg.DATA?.Length ?? 0);
-                var data = new byte[len];
-                if (msg.DATA is not null)
-                    Array.Copy(msg.DATA, data, len);
-
+                int len = Math.Clamp(msg.LEN, 0, msg.DATA.Length);
+                string hexPayload = len > 0
+                    ? BitConverter.ToString(msg.DATA, 0, len).Replace("-", " ")
+                    : "";
+                byte[] payload = new byte[len];
+                Array.Copy(msg.DATA, payload, len);
+                
                 var when = $"{ts.Millis}.{ts.Micros:D3}";
-                Console.WriteLine($"{data} {when}");
                 MessageReceived?.Invoke(this,
-                    new CanMessageEventArgs(msg.ID, when, data));
+                    new CanMessageEventArgs(msg.ID, when, len, payload));
+                
+                Console.WriteLine($"ID=0x{msg.ID:X3} Len={len} Data=[{hexPayload}] @ {when}");
             }
             else
             {

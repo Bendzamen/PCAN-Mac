@@ -38,7 +38,6 @@ public partial class MainWindowViewModel : ObservableObject
         var status = _model.Initialize();
         if (status != TPCANStatus.PCAN_ERROR_OK)
         {
-            // you could expose an ErrorMessage property here
             return Task.CompletedTask;
         }
 
@@ -58,14 +57,11 @@ public partial class MainWindowViewModel : ObservableObject
 
     private void OnMessageReceived(object? sender, CanMessageEventArgs e)
     {
-        // always update the UI from the Avalonia UI thread
         Dispatcher.UIThread.Post(() =>
         {
-            // Build exactly 8 two-digit hex values, using "--" as a placeholder.
             var hexes = e.Data
                 .Select(b => b.ToString("X2"))
                 .ToList();
-            while (hexes.Count < 8) hexes.Add("00");
             var hexString = string.Join(" ", hexes);
 
             if (_map.TryGetValue(e.Id, out var existing))
@@ -75,7 +71,7 @@ public partial class MainWindowViewModel : ObservableObject
             }
             else
             {
-                var item = new MessageItem(e.Id, e.Timestamp, hexString);
+                var item = new MessageItem(e.Id, e.Timestamp, e.Len, hexString);
                 _map[e.Id] = item;
 
                 int idx = 0;

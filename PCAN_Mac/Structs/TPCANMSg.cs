@@ -1,6 +1,4 @@
-using System;
 using System.Runtime.InteropServices;
-using PCAN_Mac.Enums;
 
 namespace PCAN_Mac.Structs;
 
@@ -17,23 +15,23 @@ namespace PCAN_Mac.Structs;
 public struct TPCANMsg
 {
     /// <summary>
-    ///  11‐ or 29‐bit CAN identifier
+    /// 4‐byte CAN identifier.
     /// </summary>
-    public uint ID;                              // DWORD → UInt32
+    public uint ID;
 
     /// <summary>
-    ///  Type of the message (standard, extended, error, etc.)
+    /// 1‐byte message type (standard, extended, RTR…).
     /// </summary>
-    public TPCANMessageType MSGTYPE;            // BYTE → byte-backed enum
+    public byte MSGTYPE;
 
     /// <summary>
-    ///  Number of data bytes (0..8)
+    /// 1‐byte data length (0–8).
     /// </summary>
-    public byte LEN;                             // BYTE → byte
+    public byte LEN;
 
     /// <summary>
-    ///  The actual data payload
+    /// Exactly 8 bytes of data payload.
     /// </summary>
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-    public byte[] DATA;                          // BYTE[8] → byte[8]
+    public byte[] DATA;
 }
