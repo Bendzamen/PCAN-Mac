@@ -29,9 +29,9 @@ public class CanReader
     /// <summary>
     /// Initialize the hardware; must be called before Start().
     /// </summary>
-    public TPCANStatus Initialize()
+    public TPCANStatus Initialize(TPCANHandle pcanUsb = TPCANHandle.PCAN_USBBUS1, TPCANBaudrate pcanBaudrate = TPCANBaudrate.PCAN_BAUD_1M)
     {
-        var status = _service.CAN_Initialize(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_1M);
+        var status = _service.CAN_Initialize(pcanUsb, pcanBaudrate);
         if (status == TPCANStatus.PCAN_ERROR_OK)
             IsRunning = true;
         return status;
@@ -65,7 +65,13 @@ public class CanReader
                     : "";
                 byte[] payload = new byte[len];
                 Array.Copy(msg.DATA, payload, len);
-                
+                /*
+                var span = TimeSpan
+                    .FromSeconds(ts.Millis)
+                    .Add(TimeSpan.FromMilliseconds(ts.Micros));
+                string formatted = span.ToString(@"hh\:mm\:ss\.fff");
+                Console.WriteLine($"{span} {formatted}");
+                */
                 var when = $"{ts.Millis}.{ts.Micros:D3}";
                 MessageReceived?.Invoke(this,
                     new CanMessageEventArgs(msg.ID, when, len, payload));

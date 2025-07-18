@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace PCAN_Mac.ViewModels
@@ -12,7 +14,7 @@ namespace PCAN_Mac.ViewModels
         public string Timestamp
         {
             get => _timestamp;
-            set { _timestamp = value; OnPropertyChanged(); }
+            set { _timestamp = DateTime.Now.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture); OnPropertyChanged(); }
         }
 
         private string _dataHex = "";

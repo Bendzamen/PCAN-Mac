@@ -1,6 +1,4 @@
-﻿// ViewModels/MainWindowViewModel.cs
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,11 +15,14 @@ public partial class MainWindowViewModel : ObservableObject
 {
     private readonly CanReader _model = new();
     private readonly Dictionary<uint, MessageItem> _map   = new();
+    public IEnumerable<TPCANBaudrate> BaudRates => Enum.GetValues<TPCANBaudrate>();
 
     public ObservableCollection<MessageItem> Messages { get; } = new();
 
     [ObservableProperty]
     private string _canButtonText = "Start CAN";
+    [ObservableProperty]
+    private TPCANBaudrate _baudrate = TPCANBaudrate.PCAN_BAUD_1M;
     
     private bool _isRunning;
 
@@ -35,37 +36,24 @@ public partial class MainWindowViewModel : ObservableObject
     {
         if (_isRunning)
         {
-            // we’re running → stop
-            Stop();
+            _model.Stop();
             CanButtonText = "Start CAN";
         }
         else
         {
-            // we’re stopped → try to start
-            var status = _model.Initialize();
+            var status = _model.Initialize(pcanBaudrate:Baudrate);
             if (status != TPCANStatus.PCAN_ERROR_OK)
             {
                 Console.WriteLine("something went wrong");
-                // you could expose an ErrorMessage property here…
                 return Task.CompletedTask;
             }
             
             _model.Start();
             CanButtonText = "Stop CAN";
         }
-
-        // flip the flag, raise property-changed so the UI updates
         _isRunning = !_isRunning;
-        //OnPropertyChanged(nameof(ToggleButtonText));
-
-        // re-query CanExecute if you conditionally disable the button
-        //ToggleCommand.NotifyCanExecuteChanged();
+        
         return Task.CompletedTask;
-    }
-
-    private void Stop()
-    {
-        _model.Stop();
     }
 
     private void OnMessageReceived(object? sender, CanMessageEventArgs e)

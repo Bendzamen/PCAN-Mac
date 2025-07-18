@@ -2,7 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:global="clr-namespace:"
         xmlns:viewModels="clr-namespace:PCAN_Mac.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PCAN_Mac.Views.MainWindow"
@@ -14,27 +13,32 @@
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>
     
-    <Grid RowDefinitions="Auto,*" Margin="10">
-        <!-- Control buttons -->
+    <Grid RowDefinitions="Auto, Auto, *" RowSpan="5" Margin="10">
+        <!-- Controls -->
         <StackPanel Orientation="Horizontal" Spacing="5" Grid.Row="0">
             <Button Content="{Binding CanButtonText}" Command="{Binding ToggleCommand}"/>
             <Button Content="Clear" Command="{Binding ClearCommand}"/>
+            <ComboBox Width="160" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding Baudrate, Mode=TwoWay}" HorizontalAlignment="Left" FontSize="12"/>
         </StackPanel>
         
         <!-- can messages box -->
-        <ListBox
-            Grid.Row="1"
-            ItemsSource="{Binding Messages}">
+        <Border Grid.Row="1" Background="#2b2f30" Padding="4,2" CornerRadius="2">
+            <Grid ColumnDefinitions="80, 100, 130, *">
+                <TextBlock Grid.Column="0" Text="ID" FontWeight="Bold"/>
+                <TextBlock Grid.Column="1" Text="DLC" FontWeight="Bold"/>
+                <TextBlock Grid.Column="2" Text="Data" FontWeight="Bold"/>
+                <TextBlock Grid.Column="3" Text="Timestamp" FontWeight="Bold"/>
+            </Grid>
+        </Border>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Messages}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="#CCC" BorderThickness="0,0,0,0" Padding="0 ">
-                        <Grid ColumnDefinitions="80,40,180,*">
-                            <TextBlock Grid.Column="0" Text="{Binding ID}" FontSize="12"/>
-                            <TextBlock Grid.Column="1" Text="{Binding DataLen}" FontSize="12"/>
-                            <TextBlock Grid.Column="2" Text="{Binding DataHex}" FontSize="12"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Timestamp}" FontSize="12"/>
-                        </Grid>
-                    </Border>
+                    <Grid ColumnDefinitions="80,40,180,*">
+                        <TextBlock Grid.Column="0" Text="{Binding ID}" FontSize="12"/>
+                        <TextBlock Grid.Column="1" Text="{Binding DataLen}" FontSize="12"/>
+                        <TextBlock Grid.Column="2" Text="{Binding DataHex}" FontSize="12"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Timestamp}" FontSize="12"/>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
