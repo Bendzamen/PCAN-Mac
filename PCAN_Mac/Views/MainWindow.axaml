@@ -17,8 +17,7 @@
     <Grid RowDefinitions="Auto,*" Margin="10">
         <!-- Control buttons -->
         <StackPanel Orientation="Horizontal" Spacing="5" Grid.Row="0">
-            <Button Content="Start CAN" Command="{Binding StartCommand}" IsEnabled="{Binding CanStart}"/>
-            <Button Content="Stop CAN" Command="{Binding StopCommand}" IsEnabled="{Binding CanStop}"/>
+            <Button Content="{Binding CanButtonText}" Command="{Binding ToggleCommand}"/>
             <Button Content="Clear" Command="{Binding ClearCommand}"/>
         </StackPanel>
         

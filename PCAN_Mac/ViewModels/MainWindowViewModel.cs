@@ -1,5 +1,6 @@
 ﻿// ViewModels/MainWindowViewModel.cs
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,40 +20,52 @@ public partial class MainWindowViewModel : ObservableObject
 
     public ObservableCollection<MessageItem> Messages { get; } = new();
 
-    [ObservableProperty] private bool canStart = true;
-    [ObservableProperty] private bool canStop;
+    [ObservableProperty]
+    private string _canButtonText = "Start CAN";
     
-    public IAsyncRelayCommand StartCommand { get; }
-    public IRelayCommand StopCommand  { get; }
+    private bool _isRunning;
 
     public MainWindowViewModel()
     {
         _model.MessageReceived += OnMessageReceived;
-
-        StartCommand = new AsyncRelayCommand(StartAsync);
-        StopCommand  = new RelayCommand(Stop);
     }
-
-    private Task StartAsync()
+    
+    [RelayCommand]
+    private Task ToggleAsync()
     {
-        var status = _model.Initialize();
-        if (status != TPCANStatus.PCAN_ERROR_OK)
+        if (_isRunning)
         {
-            return Task.CompletedTask;
+            // we’re running → stop
+            Stop();
+            CanButtonText = "Start CAN";
+        }
+        else
+        {
+            // we’re stopped → try to start
+            var status = _model.Initialize();
+            if (status != TPCANStatus.PCAN_ERROR_OK)
+            {
+                Console.WriteLine("something went wrong");
+                // you could expose an ErrorMessage property here…
+                return Task.CompletedTask;
+            }
+            
+            _model.Start();
+            CanButtonText = "Stop CAN";
         }
 
-        CanStart = false;
-        CanStop  = true;
+        // flip the flag, raise property-changed so the UI updates
+        _isRunning = !_isRunning;
+        //OnPropertyChanged(nameof(ToggleButtonText));
 
-        _model.Start();
+        // re-query CanExecute if you conditionally disable the button
+        //ToggleCommand.NotifyCanExecuteChanged();
         return Task.CompletedTask;
     }
 
     private void Stop()
     {
         _model.Stop();
-        CanStart = true;
-        CanStop  = false;
     }
 
     private void OnMessageReceived(object? sender, CanMessageEventArgs e)
