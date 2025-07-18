@@ -76,7 +76,7 @@ public class CanReader
                 MessageReceived?.Invoke(this,
                     new CanMessageEventArgs(msg.ID, when, len, payload));
                 
-                Console.WriteLine($"ID=0x{msg.ID:X3} Len={len} Data=[{hexPayload}] @ {when}");
+                //Console.WriteLine($"ID=0x{msg.ID:X3} Len={len} Data=[{hexPayload}] @ {when}");
             }
             else
             {

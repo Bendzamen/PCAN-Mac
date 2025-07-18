@@ -44,7 +44,7 @@ public partial class MainWindowViewModel : ObservableObject
             var status = _model.Initialize(pcanBaudrate:Baudrate);
             if (status != TPCANStatus.PCAN_ERROR_OK)
             {
-                Console.WriteLine("something went wrong");
+                //Console.WriteLine("something went wrong");
                 return Task.CompletedTask;
             }
             

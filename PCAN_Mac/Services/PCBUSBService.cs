@@ -23,12 +23,12 @@ public class PCBUSBService : IPCBUSBInterface
         TPCANStatus ret = PCBUSBLibrary.LCAN_Initialize(_channel.Value, _baudrate.Value);
         if (ret == TPCANStatus.PCAN_ERROR_OK)
         {
-            Console.WriteLine("PCBUSB Initialize success");
+            //Console.WriteLine("PCBUSB Initialize success");
             IsInitialized = true;
         }
         else
         {
-            Console.WriteLine("PCBUSB Initialize failed");
+            //Console.WriteLine("PCBUSB Initialize failed");
         }
         return ret;
     }
